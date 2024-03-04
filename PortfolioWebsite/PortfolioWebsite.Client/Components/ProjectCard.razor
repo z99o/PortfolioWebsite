@@ -1,26 +1,54 @@
-﻿<RadzenCard Class="rz-my-12 rz-mx-auto rz-shadow-3">
-    <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" Gap="1rem" Class="rz-p-4">
-        <ProjectCarousel></ProjectCarousel>
-        <RadzenStack Gap="0">
-            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Project</RadzenText>
-            <RadzenText TextStyle="TextStyle.Body1"><b>ProjectName</b></RadzenText>
-            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Primary Technology</RadzenText>
-            <RadzenText TextStyle="TextStyle.Body1"><b>PrimaryTechnology</b></RadzenText>
-        </RadzenStack>
-    </RadzenStack>
+﻿<MudCard>
+    <MudCardContent>
+        <MudPaper Class="d-flex flex-row flex-grow-1 gap-4" Elevation="0">
+            <ProjectCarousel></ProjectCarousel>
+            <MudDivider Vertical="true" FlexItem="true" />
+            <MudList>
+                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                    <MudText Typo="Typo.h4">ProjectName</MudText>
+                </MudListItem>
+                <MudDivider />
+                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                    <MudText Typo="Typo.h6">ProjectTechnology</MudText>
+                </MudListItem>
+                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                    <MudText Typo="Typo.h6">Highlight</MudText>
+                </MudListItem>
+                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                    <MudText Typo="Typo.h6">Highlight</MudText>
+                </MudListItem>
+                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                    <MudText Typo="Typo.h6">Highlight</MudText>
+                </MudListItem>
+            </MudList>
+        </MudPaper>
+    </MudCardContent>
+    <MudDivider DividerType="MudBlazor.DividerType.Middle" />
+    <MudCardActions>
     <MudExpansionPanels MultiExpansion="true">
-        <MudExpansionPanel Text="Overview">
+        <MudExpansionPanel Text="Overview" Style="font-size:1.3rem">
             <MudText Typo="Typo.body1">body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.</MudText>
-            <div class="rz-p-12 rz-text-align-center">
-                <RadzenLink Icon="code" Path="button" Text="Source" />
-            </div>
-            <div class="rz-p-12 rz-text-align-center">
-                <RadzenLink Icon="sports_esports" Path="button" Text="Game Page" />
+                <div class="d-flex flex-row flex-grow-1">
+                <MudButton Href="https://github.com/MudBlazor/MudBlazor"
+                           Target="_blank"
+                           Variant="MudBlazor.Variant.Filled"
+                           EndIcon="@Icons.Custom.Brands.GitHub"
+                           Color="MudBlazor.Color.Primary">
+                    GitHub Link
+                </MudButton>
+                    <MudDivider Vertical="true" FlexItem="true" />
+                <MudButton Href="https://github.com/MudBlazor/MudBlazor"
+                           Target="_blank"
+                           Variant="MudBlazor.Variant.Filled"
+                           EndIcon="@MudBlazor.Icons.Material.Rounded.Games"
+                           Color="MudBlazor.Color.Secondary">
+                    Game Page
+                </MudButton>
             </div>
         </MudExpansionPanel>
     </MudExpansionPanels>
-
-</RadzenCard>
+    </MudCardActions>
+ </MudCard>
 
 
 @code {

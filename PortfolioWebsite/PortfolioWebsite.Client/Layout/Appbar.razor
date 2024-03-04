@@ -1,0 +1,69 @@
+﻿@using PortfolioWebsite.Client.Services;
+@inject PortfolioWebsite.Client.Services.AppState AppState
+
+<MudAppBar Color="MudBlazor.Color.Primary" Fixed="true" Dense="false">
+    <div class="d-flex flex-row-reverse gap-4" style="padding-top: 1rem;padding-bottom: 1rem;padding-right: 4rem; width:auto;">
+        <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+        <MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="ma-4 align-center" T="bool" Label="Toggle Light/Dark Mode" />
+
+        <MudButtonGroup Class="align-center" Style="height:auto" Color="MudBlazor.Color.Default" Variant="MudBlazor.Variant.Outlined">
+            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.AboutMe))" Href="/"Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled = "@aboutMeActive"Color="MudBlazor.Color.Primary">About Me</MudButton>
+            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Projects))" Href="/projects"Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled = "@projectsActive"Color="MudBlazor.Color.Primary">Projects</MudButton>
+            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Contact))" Href="/contact" Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled="@contactActive" Color="MudBlazor.Color.Primary">Contact</MudButton>
+        </MudButtonGroup>
+    </div>
+</MudAppBar>
+
+
+@code {
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+		{
+            AppState.OnChange += StateHasChanged;
+        }
+    }
+    //on page load
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        //AppState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+
+    private void StateHasChanged()
+    {
+        switch (AppState.currentPage)
+        {
+            case CurrentPage.AboutMe:
+                aboutMeActive = true;
+                projectsActive = false;
+                contactActive = false;
+                break;
+            case CurrentPage.Projects:
+                aboutMeActive = false;
+                projectsActive = true;
+                contactActive = false;
+                break;
+            case CurrentPage.Contact:
+                aboutMeActive = false;
+                projectsActive = false;
+                contactActive = true;
+                break;
+        }
+    }
+
+    bool aboutMeActive = true;
+    bool projectsActive = false;
+    bool contactActive = false;
+
+    bool sidebarExpanded = true;
+    private MudTheme _theme = new();
+    private bool _isDarkMode = true;
+}

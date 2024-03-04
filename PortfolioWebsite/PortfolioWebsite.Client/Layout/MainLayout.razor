@@ -1,10 +1,8 @@
 ﻿@inherits LayoutComponentBase
-
-<RadzenLayout>
-    <NavMenu />
-    <RadzenBody>
-        <div class="rz-p-4">
-            @Body
-        </div>
-    </RadzenBody>
-</RadzenLayout>
+<MudThemeProvider />
+<MudLayout>
+    <Appbar></Appbar>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>

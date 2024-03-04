@@ -5,6 +5,8 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.Localization;
 using MudBlazor.Services;
+using MudBlazor;
+using PortfolioWebsite.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,8 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddSingleton<IClassProvider, BootstrapClassProvider>();
 builder.Services.AddSingleton<IStyleProvider, BootstrapStyleProvider>();
-
+builder.Services.AddSingleton<AppState, AppState>();
+//builder.Services.AddSingleton<MudPopoverProvider, MudPopoverProvider>();
 builder.Services
     .AddBlazorise(options =>
     {
@@ -23,8 +26,7 @@ builder.Services
     .AddLocalization();
 
 builder.Services.AddScoped<Blazorise.Localization.ITextLocalizerService, Blazorise.Localization.TextLocalizerService>();
-
-builder.Services.AddMudServices();
+builder.Services.AddMudServices().AddMudPopoverService();
 
 var app = builder.Build();
 

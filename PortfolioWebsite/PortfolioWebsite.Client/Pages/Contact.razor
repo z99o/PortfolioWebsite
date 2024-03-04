@@ -1,5 +1,5 @@
 ﻿@inject PortfolioWebsite.Client.Services.AppState AppState
-@page "/"
+@page "/contact"
 <PageTitle>Home</PageTitle>
 
 <PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
@@ -12,6 +12,6 @@
 	protected override void OnAfterRender(bool firstRender)
 	{
 		base.OnAfterRender(firstRender);
-			AppState.SetCurrentPage(Services.CurrentPage.AboutMe);
+			AppState.SetCurrentPage(Services.CurrentPage.Contact);
 	}
 }
