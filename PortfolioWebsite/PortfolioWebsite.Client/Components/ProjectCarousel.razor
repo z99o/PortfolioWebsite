@@ -1,0 +1,30 @@
+﻿
+<div class="projectcarousel">
+    <MudCarousel Class="mud-width-full" Style="height:350px; width:500px" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+        <MudCarouselItem Transition="transition" Color="@MudBlazor.Color.Primary">
+            <div class="d-flex">
+                <MudImage Width=width Height=height ObjectFit ="ObjectFit.ScaleDown" Src="img/bravethumbnail2.png" />
+            </div>
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition" Color="@MudBlazor.Color.Secondary">
+            <div class="d-flex" >
+                <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Class="mx-auto my-auto" Src="img/cavethumbnail2.png" />
+            </div>
+        </MudCarouselItem>
+        <MudCarouselItem Transition="transition">
+            <div class="d-flex" >
+                <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Class="mx-auto my-auto" Src="img/diothumbnail2.png" />
+            </div>
+        </MudCarouselItem>
+    </MudCarousel>
+</div>
+@code {
+    private int width = 500;
+    private int height = 350;
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+}
+

@@ -1,0 +1,31 @@
+﻿<RadzenCard Class="rz-my-12 rz-mx-auto rz-shadow-3">
+    <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="Radzen.JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+        <ProjectCarousel></ProjectCarousel>
+        <RadzenStack Gap="0">
+            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Project</RadzenText>
+            <RadzenText TextStyle="TextStyle.Body1"><b>ProjectName</b></RadzenText>
+            <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-4 rz-mb-0">Primary Technology</RadzenText>
+            <RadzenText TextStyle="TextStyle.Body1"><b>PrimaryTechnology</b></RadzenText>
+        </RadzenStack>
+    </RadzenStack>
+    <MudExpansionPanels MultiExpansion="true">
+        <MudExpansionPanel Text="Overview">
+            <MudText Typo="Typo.body1">body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.</MudText>
+            <div class="rz-p-12 rz-text-align-center">
+                <RadzenLink Icon="code" Path="button" Text="Source" />
+            </div>
+            <div class="rz-p-12 rz-text-align-center">
+                <RadzenLink Icon="sports_esports" Path="button" Text="Game Page" />
+            </div>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
+
+</RadzenCard>
+
+
+@code {
+    void Change(object value, string name, string action)
+    {
+        
+    }
+}
