@@ -1,17 +1,17 @@
 ﻿@using PortfolioWebsite.Client.Services;
 @inject PortfolioWebsite.Client.Services.AppState AppState
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 
 <MudAppBar Color="MudBlazor.Color.Primary" Fixed="true" Dense="false">
-    <div class="d-flex flex-row-reverse gap-4" style="padding-top: 1rem;padding-bottom: 1rem;padding-right: 4rem; width:auto;">
-        <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
-        <MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="ma-4 align-center" T="bool" Label="Toggle Light/Dark Mode" />
-
-        <MudButtonGroup Class="align-center" Style="height:auto" Color="MudBlazor.Color.Default" Variant="MudBlazor.Variant.Outlined">
-            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.AboutMe))" Href="/"Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled = "@aboutMeActive"Color="MudBlazor.Color.Primary">About Me</MudButton>
-            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Projects))" Href="/projects"Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled = "@projectsActive"Color="MudBlazor.Color.Primary">Projects</MudButton>
-            <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Contact))" Href="/contact" Style="height:30px" Variant="MudBlazor.Variant.Text" Disabled="@contactActive" Color="MudBlazor.Color.Primary">Contact</MudButton>
-        </MudButtonGroup>
-    </div>
+    <MudText Typo="Typo.h6" Class="object-left" Style="mt-auto;" Color="MudBlazor.Color.Default">Zachary Morello</MudText>
+    <MudSpacer />
+    <MudButtonGroup Class="" Style="" Color="MudBlazor.Color.Default" Variant="MudBlazor.Variant.Outlined">
+        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.AboutMe))" Href="/"         Class = "mud-theme-primary"Style="height:45px; width:250px;" Variant="MudBlazor.Variant.Text" Disabled = "@aboutMeActive"    >About Me</MudButton>
+        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Projects))" Href="/projects"Class = "mud-theme-primary"Style="height:45px; width:250px;" Variant="MudBlazor.Variant.Text" Disabled = "@projectsActive"   >Projects</MudButton>
+        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Contact))" Href="/contact"  Class = "mud-theme-primary"Style="height:45px; width:250px;" Variant="MudBlazor.Variant.Text" Disabled="@contactActive"      >Contact</MudButton>
+    </MudButtonGroup>
+    <MudSpacer />
+    <MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="object-right ml-6" Style="padding-top:5px" T="bool" Label="Toggle Light/Dark Mode" />
 </MudAppBar>
 
 
