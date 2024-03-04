@@ -17,7 +17,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddSingleton<IClassProvider, BootstrapClassProvider>();
 builder.Services.AddSingleton<IStyleProvider, BootstrapStyleProvider>();
 builder.Services.AddSingleton<AppState, AppState>();
-//builder.Services.AddSingleton<MudPopoverProvider, MudPopoverProvider>();
+//builder.Services.AddSingleton<IPopoverService, MudPopoverProvider>();
 builder.Services
     .AddBlazorise(options =>
     {

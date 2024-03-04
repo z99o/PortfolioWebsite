@@ -7,15 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\img\bravethumbnail2.png" />
-    <Content Remove="wwwroot\img\cavethumbnail2.png" />
-    <Content Remove="wwwroot\img\diothumbnail2.png" />
+    <Content Remove="wwwroot\images\bravethumbnail2.png" />
+    <Content Remove="wwwroot\images\cavethumbnail2.png" />
+    <Content Remove="wwwroot\images\diothumbnail2.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\img\bravethumbnail2.png" />
-    <None Include="wwwroot\img\cavethumbnail2.png" />
-    <None Include="wwwroot\img\diothumbnail2.png" />
+    <None Include="wwwroot\images\bravethumbnail2.png" />
+    <None Include="wwwroot\images\cavethumbnail2.png" />
+    <None Include="wwwroot\images\diothumbnail2.png" />
   </ItemGroup>
 
   <ItemGroup>
