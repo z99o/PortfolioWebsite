@@ -1,17 +1,26 @@
 ﻿@inject PortfolioWebsite.Client.Services.AppState AppState
-@page "/contact"
-<PageTitle>Home</PageTitle>
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService
+@using Shared.Models;
 
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
+@page "/contact"
+<PageTitle>Contact</PageTitle>
+
+@foreach (var project in projects)
+{
+	<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
+}
 
 @code{
 	protected override void OnAfterRender(bool firstRender)
 	{
 		base.OnAfterRender(firstRender);
-			AppState.SetCurrentPage(Services.CurrentPage.Contact);
+		AppState.SetCurrentPage(Services.CurrentPage.Contact);
+	}
+	List<Project>? projects = new List<Project>();
+
+	protected override async void OnInitialized()
+	{
+		base.OnInitialized();
+		projects = await ProjectService.GetProjects();
 	}
 }

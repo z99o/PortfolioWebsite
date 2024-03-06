@@ -1,24 +1,23 @@
 ﻿
 <div class="projectcarousel">
     <MudCarousel Class="mud-width-full" Style="height:350px; width:500px" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
-        <MudCarouselItem Transition="transition" >
-            <div class="d-flex">
-                <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Src="images/bravethumbnail2.png" />
-            </div>
-        </MudCarouselItem>
-        <MudCarouselItem Transition="transition" >
-            <div class="d-flex" >
-                <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown"  Src="images/cavethumbnail2.png" />
-            </div>
-        </MudCarouselItem>
-        <MudCarouselItem Transition="transition">
-            <div class="d-flex" >
-                <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Src="images/diothumbnail2.png" />
-            </div>
-        </MudCarouselItem>
+        @if (imageUrls != null){
+            foreach(var imageUrl in imageUrls)
+		    {
+			    <MudCarouselItem Transition="transition" >
+				    <div class="d-flex">
+					    <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Src="@imageUrl" />
+				    </div>
+			    </MudCarouselItem>
+		    }
+        }
     </MudCarousel>
 </div>
 @code {
+
+    [Parameter]
+    public List<string>? imageUrls { get; set; }
+
     private int width = 500;
     private int height = 350;
     private bool arrows = true;

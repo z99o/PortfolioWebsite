@@ -4,7 +4,7 @@ using System.Text;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace PortfolioWebsite.Models
+namespace PortfolioWebsite.Shared.Models
 {
     public class Project
     {
@@ -12,10 +12,11 @@ namespace PortfolioWebsite.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string ID;
         public string Title { get; set; }
-        public string[] Highlights { get; set; }
-        public string[] ImageUrls { get; set; }
+        public List<string> Highlights { get; set; }
+        public List<string> ImageUrls { get; set; }
         public string GithubURL { get; set; }
         public string ProjectURL { get; set; }
         public string Description { get; set; }
+        public string SubTitle { get; set; }
     }
 }

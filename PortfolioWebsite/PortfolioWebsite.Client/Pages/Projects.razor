@@ -1,16 +1,49 @@
 ﻿@inject PortfolioWebsite.Client.Services.AppState AppState
-@page "/projects"
-<PageTitle>Home</PageTitle>
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService
+@using Shared.Models;
 
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
+@page "/projects"
+<PageTitle>Projects</PageTitle>
+@if (dataIsLoaded == false)
+{
+	<MudProgressCircular Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Medium" />
+	//show skeleton loader
+	<MudSkeleton Loading="true" Animation="MudBlazor.Animation.Wave">
+		<MudCard>
+			<MudCardMedia>
+				<MudSkeleton Width="100%" Height="200px" />
+			</MudCardMedia>
+			<MudCardContent>
+				<MudText Typo="Typo.h6" Class="text-center">Loading...</MudText>
+				<MudText Typo="Typo.body2" Class="text-center">Loading...</MudText>
+			</MudCardContent>
+		</MudCard>
+	</MudSkeleton>
+}
+else
+{
+	@foreach (var project in projects)
+	{
+		<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
+	}
+}
 
 @code{
+
+	List<Project>? projects = new List<Project>();
+
+	private bool dataIsLoaded = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		base.OnInitialized();
+		projects = await ProjectService.GetProjects();
+		Thread.Sleep(1000);
+		dataIsLoaded = true;
+	}
 	protected override void OnAfterRender(bool firstRender)
 	{
+		
 		base.OnAfterRender(firstRender);
 			AppState.SetCurrentPage(Services.CurrentPage.Projects);
 	}

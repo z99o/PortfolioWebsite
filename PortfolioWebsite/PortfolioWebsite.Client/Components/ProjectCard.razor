@@ -1,25 +1,23 @@
-﻿<MudCard>
+﻿@using Shared.Models;
+<MudCard>
     <MudCardContent>
         <MudPaper Class="d-flex flex-row flex-grow-1 gap-4" Elevation="0">
-            <ProjectCarousel></ProjectCarousel>
+            <ProjectCarousel imageUrls="@project.ImageUrls"/>
             <MudDivider Vertical="true" FlexItem="true" />
             <MudList>
-                <MudListItem Avatar="@Icons.Material.Filled.Image">
-                    <MudText Typo="Typo.h4">ProjectName</MudText>
+                <MudListItem>
+                    <MudText Typo="Typo.h4">@project.Title</MudText>
                 </MudListItem>
                 <MudDivider />
-                <MudListItem Avatar="@Icons.Material.Filled.Image">
-                    <MudText Typo="Typo.h6">ProjectTechnology</MudText>
+                <MudListItem Avatar="@Icons.Material.Filled.Computer">
+                    <MudText Typo="Typo.h6">@project.SubTitle</MudText>
                 </MudListItem>
-                <MudListItem Avatar="@Icons.Material.Filled.Image">
-                    <MudText Typo="Typo.h6">Highlight</MudText>
-                </MudListItem>
-                <MudListItem Avatar="@Icons.Material.Filled.Image">
-                    <MudText Typo="Typo.h6">Highlight</MudText>
-                </MudListItem>
-                <MudListItem Avatar="@Icons.Material.Filled.Image">
-                    <MudText Typo="Typo.h6">Highlight</MudText>
-                </MudListItem>
+                @foreach (var highlight in @project.Highlights)
+				{
+					<MudListItem Avatar="@Icons.Material.Filled.Star" Class="ml-10">
+						<MudText Typo="Typo.h6">@highlight</MudText>
+					</MudListItem>
+				}
             </MudList>
         </MudPaper>
     </MudCardContent>
@@ -27,9 +25,9 @@
     <MudCardActions>
     <MudExpansionPanels MultiExpansion="true" Style="flex:auto">
         <MudExpansionPanel Text="Overview" Style="font-size:1.3rem">
-            <MudText Typo="Typo.body1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.</MudText>
+                <MudText Typo="Typo.body1">@project.Description</MudText>
                 <div class="d-flex flex-row flex-grow-4 gap-2" style="margin-top:15px">
-                <MudButton Href="https://github.com/MudBlazor/MudBlazor"
+                <MudButton Href="@project.GithubURL"
                            Target="_blank"
                            Variant="MudBlazor.Variant.Filled"
                            EndIcon="@Icons.Custom.Brands.GitHub"
@@ -37,7 +35,7 @@
                     GitHub Link
                 </MudButton>
                     <MudDivider Vertical="true" FlexItem="true" />
-                <MudButton Href="https://github.com/MudBlazor/MudBlazor"
+                <MudButton Href="@project.ProjectURL"
                            Target="_blank"
                            Variant="MudBlazor.Variant.Filled"
                            EndIcon="@MudBlazor.Icons.Material.Rounded.Games"
@@ -52,6 +50,37 @@
 
 
 @code {
+
+    [Parameter]
+    public Project? project { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        //if project null then generate a placeholder
+        if(project == null)
+        {
+            project = new Project();
+			project.Title = "Project Title";
+			project.Description = "Project Description";
+			project.SubTitle = "Technologies Used";
+			project.Highlights = new List<string> { "Highlight 1", "Highlight 2", "Highlight 3" };
+			project.ImageUrls = new List<string> { "images/cavethumbnail2.png" };
+            project.ProjectURL = "https://www.google.com";
+            project.GithubURL = "https://www.google.com";
+        }
+        if(project.ProjectURL == null)
+		{
+			project.ProjectURL = "https://www.google.com";
+		}
+        if(project.GithubURL == null){
+			project.GithubURL = "https://www.google.com";
+        }
+        if(project.ImageUrls == null){
+			project.ImageUrls = new List<string> { "images/cavethumbnail2.png" };
+		}
+    }
+
     void Change(object value, string name, string action)
     {
         

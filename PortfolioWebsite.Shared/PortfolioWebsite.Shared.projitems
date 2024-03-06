@@ -12,9 +12,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Connection\DatabaseConnection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Connection\DatabaseConnectionTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Project.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\ProjectDBContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\Abstract\IRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repository\interfaces\IProjectRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Directory.Build.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Repository\Abstract\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Repository\Interfaces\" />
   </ItemGroup>
 </Project>

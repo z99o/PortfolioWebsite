@@ -1,12 +1,13 @@
 ﻿@inject PortfolioWebsite.Client.Services.AppState AppState
-@page "/"
-<PageTitle>Home</PageTitle>
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService
+@using Shared.Models;
 
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
-<PortfolioWebsite.Client.Components.ProjectCard></PortfolioWebsite.Client.Components.ProjectCard>
+@page "/"
+<PageTitle>Projects</PageTitle>
+@foreach (var project in projects)
+{
+	<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
+}
 
 @code{
 	protected override void OnAfterRender(bool firstRender)
@@ -14,4 +15,12 @@
 		base.OnAfterRender(firstRender);
 			AppState.SetCurrentPage(Services.CurrentPage.AboutMe);
 	}
+
+	List<Project>? projects = new List<Project>();
+	protected override async void OnInitialized()
+	{
+		base.OnInitialized();
+		projects = await ProjectService.GetProjects();
+	}
+
 }
