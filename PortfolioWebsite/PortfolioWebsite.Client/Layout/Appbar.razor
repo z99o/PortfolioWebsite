@@ -14,9 +14,14 @@
     <MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="object-right ml-6" Style="padding-top:5px" T="bool" Label="Toggle Light/Dark Mode" />
 </MudAppBar>
 
+@if (underConstruction)
+{
+    <PortfolioWebsite.Client.Components.ConstructionBanner></PortfolioWebsite.Client.Components.ConstructionBanner>
+}
 
 @code {
 
+    private bool underConstruction = true;
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
