@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioWebsite", "Portfol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioWebsite.Client", "PortfolioWebsite\PortfolioWebsite.Client\PortfolioWebsite.Client.csproj", "{04AF8565-CF70-4C84-A1A5-6AE68922B16C}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PortfolioWebsite.Shared", "PortfolioWebsite.Shared\PortfolioWebsite.Shared.shproj", "{D8152AC4-DDA9-49F9-A407-D129C25F9473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,5 +29,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD3649B5-30E4-4E70-BA27-83837AF22EC2}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PortfolioWebsite.Shared\PortfolioWebsite.Shared.projitems*{04af8565-cf70-4c84-a1a5-6ae68922b16c}*SharedItemsImports = 5
+		PortfolioWebsite.Shared\PortfolioWebsite.Shared.projitems*{d8152ac4-dda9-49f9-a407-d129c25f9473}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
