@@ -1,0 +1,50 @@
+﻿@code{
+	/// <summary>
+	///All this does is create a little co
+	/// </summary>
+}
+
+@inject PortfolioWebsite.Client.Services.ImageUploadService ImageUploadService
+@inject ISnackbar Snackbar
+<MudPaper Elevation="4" Class="p-4 d-block">
+	<MudText Typo="Typo.h5">Upload Test</MudText>
+	<MudText Typo="Typo.body1">This is a test of the MudBlazor FileUpload component. It will upload files to the server and then display the urls of the uploaded files.</MudText>
+	<MudText Typo="Typo.body1">The maximum file count is 3 and the accepted file type is png.</MudText>
+	<MudFileUpload T="IBrowserFile" Accept="png," FilesChanged="AddFile" MaximumFileCount="3">
+		<ButtonTemplate>
+			<MudButton HtmlTag="label"
+					   Variant="MudBlazor.Variant.Filled"
+					   Color="MudBlazor.Color.Primary"
+					   StartIcon="@Icons.Material.Filled.CloudUpload"
+					   for="@context.Id">
+				Upload Files
+			</MudButton>
+		</ButtonTemplate>
+	</MudFileUpload>
+	<MudButton Variant="MudBlazor.Variant.Filled" Color="MudBlazor.Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Submit</MudButton>
+</MudPaper>
+@code {
+
+
+	/// <summary>
+	/// 
+	/// </summary>
+
+	List<IBrowserFile> files = new List<IBrowserFile>();
+	private void AddFile(IBrowserFile file)
+	{
+	files.Add(file);
+	}
+
+	private async Task Submit()
+	{
+		//submit the files
+		var urls = await ImageUploadService.UploadImages(files);
+		if(urls != null && urls.Count() > 0)
+		{
+			//do something with the urls
+			Snackbar.Add("Files " + urls + " uploaded successfully", Severity.Success);	
+		}
+
+	}
+}

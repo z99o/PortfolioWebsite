@@ -1,0 +1,147 @@
+﻿@using Shared.Models;
+@using System.ComponentModel.DataAnnotations
+@using System.Text.Json;
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService
+@inject PortfolioWebsite.Client.Services.ImageUploadService ImageUploadService
+
+<MudCard>
+	<MudForm Model="@model">
+		<MudCardContent>
+			<MudTextField @bind-Value="model.Title" Label="Title" Required="true" Validation="@(new Func<string, string>(AlreadyExists))" />
+			<MudTextField @bind-Value="model.SubTitle" Label="SubTitle" Required="true" />
+			<MudTextField @bind-Value="model.Description" Label="Description" Required="true" />
+			<MudTextField @bind-Value="model.GithubURL" Label="GithubURL" Required="true" />
+			<MudTextField @bind-Value="model.ProjectURL" Label="ProjectURL" Required="true" />
+			<MudFileUpload T="IBrowserFile" Accept=".png,.jpg,.gif,.webm" FilesChanged="AddFile">
+				<ButtonTemplate>
+					<MudButton HtmlTag="label"
+							   Variant="MudBlazor.Variant.Filled"
+							   Color="MudBlazor.Color.Primary"
+							   StartIcon="@Icons.Material.Filled.CloudUpload"
+							   for="@context.Id">
+						Upload Files
+					</MudButton>
+					<MudButton OnClick="@ClearFiles"
+							   Variant="MudBlazor.Variant.Filled"
+							   Color="MudBlazor.Color.Primary"
+							   StartIcon="@Icons.Material.Filled.Clear">
+						Clear Files
+					</MudButton>
+				</ButtonTemplate>
+			</MudFileUpload>
+
+			@if (model.files != null)
+			{
+				<MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+				<MudList>
+					@foreach (var file in files)
+					{
+						<MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+							@file.Name <code>@file.Size bytes</code>
+						</MudListItem>
+					}
+				</MudList>
+			}
+
+			<MudTextField @bind-Value="model.Highlights1" Label="Highlights" Required="true" />
+			<MudTextField @bind-Value="model.Highlights2" Label="Highlights" Required="true" />
+			<MudTextField @bind-Value="model.Highlights3" Label="Highlights" Required="true" />
+		</MudCardContent>
+		<MudCardActions>
+			<MudButton Variant="MudBlazor.Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="@(async () => await Submit())" Type="Submit">Submit</MudButton>
+		</MudCardActions>
+	</MudForm>
+	</MudCard>
+
+
+@code{
+	CreateProjectModel model= new CreateProjectModel();
+	bool success;
+
+	public List<Project>? existingProjects;
+
+	List<IBrowserFile> files = new List<IBrowserFile>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+		existingProjects = await ProjectService.GetProjects();
+	}
+
+	public class CreateProjectModel
+	{
+		[Required]
+		[MinLength(3)]
+		public string Title { get; set; }
+		[Required]
+		public string SubTitle { get; set; }
+		[Required]
+		public string Description { get; set; }
+		[Required]
+		[Url]
+		public string GithubURL { get; set; }
+		[Url]
+		public string ProjectURL { get; set; }
+		public List<string> ImageUrls { get; set; }
+		public string Highlights1 { get; set; }
+		public string Highlights2 { get; set; }
+		public string Highlights3 { get; set; }
+		public IReadOnlyList<IBrowserFile> files = new List<IBrowserFile>();
+	}
+
+	private async Task Submit()
+	{
+		List<string> fileNames = new List<string>();
+		if(files.Count > 0)
+		{
+			fileNames = JsonSerializer.Deserialize<List<string>>(await ImageUploadService.UploadImages(files.ToList()));
+		}
+		Project project = new Project
+		{
+			Title = model.Title,
+			SubTitle = model.SubTitle,
+			Description = model.Description,
+			GithubURL = model.GithubURL,
+			ProjectURL = model.ProjectURL,
+			ImageUrls = fileNames,
+			Highlights = new List<string> { model.Highlights1, model.Highlights2, model.Highlights3 }
+		};
+
+		await ProjectService.CreateProject(project);
+		files.Clear();
+		model = new CreateProjectModel();
+		StateHasChanged(); //this should grab the new project so that the already exists works immediately
+	}
+
+	private async void UploadFiles()
+	{
+		foreach (var file in files)
+		{
+			await ImageUploadService.UploadImage(file);
+		}
+	}
+
+
+	private void AddFile(IBrowserFile file)
+	{
+		files.Add(file);
+	}
+
+	private void ClearFiles()
+	{
+		files.Clear();
+	}
+
+	private string AlreadyExists(string value)
+	{
+		if(existingProjects == null)
+		{
+			return "";
+		}
+		if (existingProjects.Select(a=>a.Title).Contains(value))
+		{
+			return "Project already exists";
+		}
+		return "";
+	}
+}

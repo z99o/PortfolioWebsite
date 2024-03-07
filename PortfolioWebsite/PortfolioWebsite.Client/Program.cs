@@ -9,6 +9,7 @@ using PortfolioWebsite.Shared.Repository;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddTransient<ProjectService, ProjectService>();
+builder.Services.AddTransient<ImageUploadService, ImageUploadService>();
 builder.Services.AddScoped(sp =>
 	new HttpClient
 	{
@@ -19,6 +20,16 @@ builder.Services.AddSingleton<IStyleProvider, BootstrapStyleProvider>();
 builder.Services.AddSingleton<AppState, AppState>();
 builder.Services.AddScoped<Blazorise.Localization.ITextLocalizerService, Blazorise.Localization.TextLocalizerService>();
 builder.Services.AddMudPopoverService();
+builder.Services.AddMudBlazorSnackbar(config =>
+{
+	config.PositionClass = Defaults.Classes.Position.BottomCenter;
+	config.PreventDuplicates = true;
+	config.NewestOnTop = true;
+	config.ShowCloseIcon = true;
+	config.VisibleStateDuration = 5000;
+	config.HideTransitionDuration = 500;
+	config.ShowTransitionDuration = 500;
+});
 builder.Services.AddMudBlazorScrollManager();
 builder.Services.AddMudBlazorKeyInterceptor();
 await builder.Build().RunAsync();

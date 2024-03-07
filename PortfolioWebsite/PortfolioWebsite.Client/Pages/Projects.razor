@@ -4,31 +4,30 @@
 
 @page "/projects"
 <PageTitle>Projects</PageTitle>
-@if (dataIsLoaded == false)
+
+@foreach (var project in projects)
 {
-	<MudProgressCircular Color="MudBlazor.Color.Primary" Size="MudBlazor.Size.Medium" />
-	//show skeleton loader
-	<MudSkeleton Loading="true" Animation="MudBlazor.Animation.Wave">
-		<MudCard>
-			<MudCardMedia>
-				<MudSkeleton Width="100%" Height="200px" />
-			</MudCardMedia>
-			<MudCardContent>
-				<MudText Typo="Typo.h6" Class="text-center">Loading...</MudText>
-				<MudText Typo="Typo.body2" Class="text-center">Loading...</MudText>
-			</MudCardContent>
-		</MudCard>
-	</MudSkeleton>
-}
-else
-{
-	@foreach (var project in projects)
+	@if (dataIsLoaded == false)
 	{
-		<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
+		<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
+	}
+	else{
+		<PortfolioWebsite.Client.Components.ProjectCard project="@project"/>
 	}
 }
 
 @code{
+
+	//default project for this website that is always shown
+	private Project defaultProj = new Project
+	{
+		Title = "Portfolio Website",
+		SubTitle = "This website!!!",
+		Description = "This website serves as a showcase of my work! It is using Blazor WebAssembly for the backend and frontend. The UI is made with MudBlazor, a fantastic open source component library that seems to out-swag Telerik at points. I've normally worked with SQL but decided to try out MongoDB as the storage for the project information, like what you're reading at this moment. The web server is published through Azure.",
+		ImageUrls = new List<string> { "images/portfolio.png" },
+		Highlights = new List<string> { "Blazor WebAssembly", "MongoDB", "Azure DevOps"},
+		GithubURL = "https://github.com/z99o/PortfolioWebsite"
+	};
 
 	List<Project>? projects = new List<Project>();
 
@@ -38,7 +37,7 @@ else
 	{
 		base.OnInitialized();
 		projects = await ProjectService.GetProjects();
-		Thread.Sleep(1000);
+		projects.Insert(0,defaultProj);
 		dataIsLoaded = true;
 	}
 	protected override void OnAfterRender(bool firstRender)

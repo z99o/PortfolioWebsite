@@ -27,27 +27,33 @@
         <MudExpansionPanel Text="Overview" Style="font-size:1.3rem">
                 <MudText Typo="Typo.body1">@project.Description</MudText>
                 <div class="d-flex flex-row flex-grow-4 gap-2" style="margin-top:15px">
-                <MudButton Href="@project.GithubURL"
-                           Target="_blank"
-                           Variant="MudBlazor.Variant.Filled"
-                           EndIcon="@Icons.Custom.Brands.GitHub"
-                           Color="MudBlazor.Color.Primary">
-                    GitHub Link
-                </MudButton>
+                    @if (project?.GithubURL != null && project?.GithubURL != "")
+                    {
+                        <MudButton Href="@project.GithubURL"
+                        Target="_blank"
+                        Variant="MudBlazor.Variant.Filled"
+                        EndIcon="@Icons.Custom.Brands.GitHub"
+                        Color="MudBlazor.Color.Primary">
+                            GitHub Link
+                        </MudButton>
+                    }
                     <MudDivider Vertical="true" FlexItem="true" />
-                <MudButton Href="@project.ProjectURL"
-                           Target="_blank"
-                           Variant="MudBlazor.Variant.Filled"
-                           EndIcon="@MudBlazor.Icons.Material.Rounded.Games"
-                           Color="MudBlazor.Color.Secondary">
-                    Game Page
-                </MudButton>
+                    @if (project?.ProjectURL != null && project?.ProjectURL != "")
+					{
+						<MudButton Href="@project.ProjectURL"
+						Target="_blank"
+						Variant="MudBlazor.Variant.Filled"
+						EndIcon="@MudBlazor.Icons.Material.Rounded.Games"
+						Color="MudBlazor.Color.Secondary">
+							Game Page
+						</MudButton>
+					}
             </div>
         </MudExpansionPanel>
     </MudExpansionPanels>
     </MudCardActions>
  </MudCard>
-
+ 
 
 @code {
 
@@ -65,19 +71,12 @@
 			project.Description = "Project Description";
 			project.SubTitle = "Technologies Used";
 			project.Highlights = new List<string> { "Highlight 1", "Highlight 2", "Highlight 3" };
-			project.ImageUrls = new List<string> { "images/cavethumbnail2.png" };
-            project.ProjectURL = "https://www.google.com";
-            project.GithubURL = "https://www.google.com";
-        }
-        if(project.ProjectURL == null)
-		{
-			project.ProjectURL = "https://www.google.com";
-		}
-        if(project.GithubURL == null){
-			project.GithubURL = "https://www.google.com";
+			project.ImageUrls = new List<string> { "" };
+            project.ProjectURL = "";
+            project.GithubURL = "";
         }
         if(project.ImageUrls == null){
-			project.ImageUrls = new List<string> { "images/cavethumbnail2.png" };
+			project.ImageUrls = new List<string> { "images/Placeholder.png" };
 		}
     }
 

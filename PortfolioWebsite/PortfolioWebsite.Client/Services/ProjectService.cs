@@ -18,9 +18,18 @@ namespace PortfolioWebsite.Client.Services
 		}
 		public async Task<List<Project>> GetProjects()
 		{
-			var result = await _http.GetFromJsonAsync<List<Project>>("api/Project/Index");
-			_http.Dispose();
-			return result;
+			List<Project> result = new List<Project>();
+			try
+			{
+				result = await _http.GetFromJsonAsync<List<Project>>("api/Project/Index");
+				_http.Dispose();
+				return result;
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(String.Format("Error fetching Projects + {0}", ex.Message));
+				return result;
+			}
 		}
 		public async Task<Project> GetProject(string id)
 		{
