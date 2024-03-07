@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace PortfolioWebsite.Client.Services
 {
@@ -17,10 +19,10 @@ namespace PortfolioWebsite.Client.Services
 				return a;
 			}
 		}
-		private static string baseUri = "https://localhost:7158/";
-
-		public ImageUploadService()
+		private static string baseUri = "";
+		public ImageUploadService(HttpClient http, NavigationManager navigationManager)
 		{
+			baseUri = navigationManager.BaseUri;
 		}
 
 		/// <summary>

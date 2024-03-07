@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using PortfolioWebsite.Client.Services;
 using PortfolioWebsite.Shared.Repository;
+using Microsoft.AspNetCore.Components;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddTransient<ProjectService, ProjectService>();

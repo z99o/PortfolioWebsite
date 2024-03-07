@@ -11,16 +11,18 @@ using PortfolioWebsite.Shared.Repository;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Components;
 [assembly: ApiController]
 var builder = WebApplication.CreateBuilder(args);
-
-var uriPath = "http://localhost:5187";
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var uriPath = "https://localhost:7158/";
 //var mongoDBSettings = builder.Configuration.GetSection("MongoDBSettings").Get<MongoDBSettings>();
 //builder.Services.AddScoped(service => new MongoDBService(mongoDBSettings));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IClassProvider, BootstrapClassProvider>();
 builder.Services.AddSingleton<IStyleProvider, BootstrapStyleProvider>();
@@ -51,7 +53,7 @@ builder.Services.AddMudBlazorSnackbar(config =>
 builder.Services.AddScoped(sp =>
 	new HttpClient
 	{
-        BaseAddress = new Uri("http://localhost:5187"),
+        BaseAddress = new Uri(uriPath),
     });
 builder.Services.AddHttpClient("myHttpClient", client =>
 {
@@ -60,15 +62,16 @@ builder.Services.AddHttpClient("myHttpClient", client =>
 	client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 }
 )
-.ConfigurePrimaryHttpMessageHandler(() =>
-{
-	return new HttpClientHandler()
+	.ConfigurePrimaryHttpMessageHandler(() =>
 	{
-		UseDefaultCredentials = true,
-		AllowAutoRedirect = false
-	};
+		return new HttpClientHandler()
+		{
+			UseDefaultCredentials = true,
+			AllowAutoRedirect = false
+		};
 
-});
+	});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -83,12 +86,20 @@ else
     app.UseHsts();
 }
 
-
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-app.UseAntiforgery();
+// app.UseCookiePolicy();
 
+app.UseRouting();
+app.UseAntiforgery();
+// app.UseRequestLocalization();
+//app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
+// app.UseSession();
+// app.UseResponseCompression();
+// app.UseResponseCaching();
 app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(PortfolioWebsite.Client._Imports).Assembly);

@@ -2,6 +2,7 @@
 using PortfolioWebsite.Shared.Models;
 using System.Net;
 using System.Net.Http.Json;
+
 namespace PortfolioWebsite.Client.Services
 {
     public class ProjectService
@@ -12,9 +13,11 @@ namespace PortfolioWebsite.Client.Services
 				a.BaseAddress = new Uri(baseUri);
 				return a;
 			} }
-		private static string baseUri = "https://localhost:7158/";
-		public ProjectService(HttpClient http)
+		private static string baseUri = "";
+		public ProjectService(HttpClient http,NavigationManager navigationManager)
         {
+			baseUri = navigationManager.BaseUri;
+			//baseUri = http.BaseAddress.ToString();
 		}
 		public async Task<List<Project>> GetProjects()
 		{
