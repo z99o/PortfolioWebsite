@@ -1,17 +1,19 @@
 ﻿@using PortfolioWebsite.Client.Services;
 @inject PortfolioWebsite.Client.Services.AppState AppState
+@inject IJSRuntime jsRuntime;
+
 <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 
 <MudAppBar Color="MudBlazor.Color.Primary" Fixed="true" Dense="false">
-    <MudText Typo="Typo.h6" Class="object-left" Style="mt-auto;" Color="MudBlazor.Color.Default">Zachary Morello</MudText>
     <MudSpacer />
     <MudButtonGroup Class="" Style="" Color="MudBlazor.Color.Default" Variant="MudBlazor.Variant.Outlined">
-        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.AboutMe))" Href="/"         Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text" Disabled = "@aboutMeActive"    >About Me</MudButton>
-        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Projects))" Href="/projects"Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text" Disabled = "@projectsActive"   >Projects</MudButton>
-        <MudButton OnClick="@((e) => AppState.SetCurrentPage(CurrentPage.Contact))" Href="/contact"  Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text" Disabled="@contactActive"      >Contact</MudButton>
+        <MudButton Href="/"         Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text"  >About</MudButton>
+        <MudButton Href="/projects"Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text"   >Projects</MudButton>
+        <MudButton Href="/contact"  Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text"  >Contact</MudButton>
+        <MudButton Href="/admin"  Class = "mud-theme-primary"Style="height:45px; max-width:250px;" Variant="MudBlazor.Variant.Text"    >Admin</MudButton>
     </MudButtonGroup>
     <MudSpacer />
-    <MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="object-right ml-6" Style="padding-top:5px" T="bool" Label="Toggle Light/Dark Mode" />
+    <!--<MudSwitch @bind-Checked="@_isDarkMode" Color="MudBlazor.Color.Primary" Class="object-right ml-6" Style="padding-top:5px" T="bool" Label="Toggle Light/Dark Mode" /> -->
 </MudAppBar>
 
 @if (underConstruction)
@@ -22,12 +24,31 @@
 @code {
 
     private bool underConstruction = true;
+    private bool isMobile = false;
+    private string deviceType = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            await Task.Run(()=>GetDevice());
+            StateHasChanged();
+        }
+    }
+
+    private async Task GetDevice()
+    {
+        isMobile = await jsRuntime.InvokeAsync<bool>("isDevice");
+        deviceType = isMobile ? "Mobile" : "Desktop";
+    }
+
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
         if (firstRender)
 		{
-            AppState.OnChange += StateHasChanged;
+            //AppState.OnChange += StateHasChanged;
         }
     }
     //on page load
@@ -39,7 +60,7 @@
 
     public void Dispose()
     {
-        AppState.OnChange -= StateHasChanged;
+        //AppState.OnChange -= StateHasChanged;
     }
 
     private void StateHasChanged()
@@ -50,16 +71,25 @@
                 aboutMeActive = true;
                 projectsActive = false;
                 contactActive = false;
+                adminActive = false;
                 break;
             case CurrentPage.Projects:
                 aboutMeActive = false;
                 projectsActive = true;
                 contactActive = false;
+                adminActive = false;
                 break;
             case CurrentPage.Contact:
                 aboutMeActive = false;
                 projectsActive = false;
                 contactActive = true;
+                adminActive = false;
+                break;
+            case CurrentPage.Admin:
+                aboutMeActive = false;
+                projectsActive = false;
+                contactActive = false;
+                adminActive = true;
                 break;
         }
     }
@@ -67,6 +97,7 @@
     bool aboutMeActive = true;
     bool projectsActive = false;
     bool contactActive = false;
+    bool adminActive = false;
 
     bool sidebarExpanded = true;
     private MudTheme _theme = new();

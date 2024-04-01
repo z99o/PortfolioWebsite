@@ -1,0 +1,50 @@
+﻿@inject PortfolioWebsite.Client.Services.AppState AppState
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService
+@using Shared.Models;
+@using PortfolioWebsite.Client.Components;
+
+@page "/admin"
+
+@if(adminActive){
+	<ProjectCreateForm></ProjectCreateForm>
+	@foreach(var project in projects)
+	{
+		@if (dataIsLoaded == false)
+		{
+			<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
+		}
+		else
+		{
+			<PortfolioWebsite.Client.Components.ProjectCard project="@project" admin="true" />
+		}
+	}
+}
+else
+{
+	<MudText Typo="Typo.body1">
+		no peeking :)
+	</MudText>
+}
+
+@code{
+
+	private bool dataIsLoaded = false;
+	private bool adminActive = false;
+	protected override void OnAfterRender(bool firstRender)
+	{
+		base.OnAfterRender(firstRender);
+		AppState.SetCurrentPage(Services.CurrentPage.Admin);
+	}
+	List<Project>? projects = new List<Project>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		base.OnInitialized();
+		projects = await ProjectService.GetProjects();
+		foreach (var project in projects)
+		{
+			Console.WriteLine(String.Format("Id:{0}", project.ID));
+		}
+		dataIsLoaded = true;
+	}
+}

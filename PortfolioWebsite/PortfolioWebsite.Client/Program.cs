@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Components;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddTransient<ProjectService, ProjectService>();
 builder.Services.AddTransient<ImageUploadService, ImageUploadService>();
+builder.Services.AddTransient<EmailService, EmailService>();
 builder.Services.AddScoped(sp =>
 	new HttpClient
 	{

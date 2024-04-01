@@ -1,14 +1,13 @@
 ﻿@inject PortfolioWebsite.Client.Services.AppState AppState
 @inject PortfolioWebsite.Client.Services.ProjectService ProjectService
 @using Shared.Models;
+@using PortfolioWebsite.Client.Components;
 
 @page "/contact"
 <PageTitle>Contact</PageTitle>
-
-@foreach (var project in projects)
-{
-	<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
-}
+ 
+<ContactForm></ContactForm>
+<ContactLinks></ContactLinks>
 
 @code{
 	protected override void OnAfterRender(bool firstRender)

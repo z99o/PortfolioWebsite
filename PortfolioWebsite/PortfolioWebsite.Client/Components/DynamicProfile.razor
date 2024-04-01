@@ -1,0 +1,38 @@
+﻿<div style="position:relative">
+	<MudImage class="profile-image" Fluid="true" Src="assets/profile-image.png" />
+	@if (initialized)
+	{
+		<Stinger src=@stingerSrc/>
+	}
+	else
+	{
+		<MudProgressCircular Indeterminate="true" Size="MudBlazor.Size.Small" Class="stinger-skeleton" />
+	}
+</div>
+
+@code {
+
+	string stingerSrc = "";
+	string[] stingerList = new string[] { "assets/stinger.png", "assets/stinger2.png", "assets/stinger3.png", "assets/stinger4.png" };
+	bool initialized = false;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			initialized = false;
+			//wait a sec
+			stingerSrc = stingerList.Length > 0 ? stingerList[new Random().Next(0, stingerList.Length)] : "assets/stinger.png";
+			initialized = true;
+			StateHasChanged();
+		}
+		await base.OnAfterRenderAsync(firstRender);
+	}
+
+	public void Dispose()
+	{
+		initialized = false;
+		StateHasChanged();
+	}
+
+}

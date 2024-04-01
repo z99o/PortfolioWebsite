@@ -44,13 +44,14 @@ namespace PortfolioWebsite.Client.Services
 		{
 			var response = await _http.PostAsJsonAsync("api/Project/Create", project);
 			_http.Dispose();
-			return await response.Content.ReadFromJsonAsync<Project>();
+			return project;
+
 		}
 		public async Task<Project> UpdateProject(Project project)
 		{
 			var response = await _http.PutAsJsonAsync("api/ProjectUpdate", project);
 			_http.Dispose();
-			return await response.Content.ReadFromJsonAsync<Project>();
+			return project;
 		}
 		public async Task DeleteProject(string id)
 		{

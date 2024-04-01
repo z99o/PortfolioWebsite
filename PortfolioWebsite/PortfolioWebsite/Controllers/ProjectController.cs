@@ -16,7 +16,8 @@ namespace PortfolioWebsite.Controllers
 		[Route("Index")]
 		public async Task<ActionResult<List<Project>>> Index()
 		{
-			return await _projectRepository.GetAll();
+			var projects = await _projectRepository.GetAll();
+			return projects;
 		}
 
 		[HttpPost]

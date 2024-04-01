@@ -1,0 +1,9 @@
+﻿/*animate a rainbow gradient border spins radially and is transparent for half the border*/
+
+.gradient-border {
+    color: white;
+    border-width: 5px;
+    border-style:solid;
+    border-image: linear-gradient( to bottom, rgba(0, 0, 0, 0), red, rgba(0, 0, 0, 0)) 1 100%;
+}
+

@@ -1,0 +1,53 @@
+﻿
+/* simple class that animates a component in place in a smooth random shake, and loops*/
+
+
+.stinger {
+    /* center it at the bottom left of the parent*/
+    --x:0px;
+    --y:0px;
+    position:absolute;
+    /* pixel width and height are 10% of parent*/
+    /*inherit the current dims of the parent*/
+    height: auto;
+    left:10%;
+    top:55%;
+    max-width: 40%;
+    min-width: 25%;
+    margin-left: var(--x);
+    margin-top: var(--y);
+    animation: x 3s, y 4s;
+    animation-timing-function: cubic-bezier(.5,-800,.5,800);
+    animation-iteration-count: infinite;
+    color: blue;
+    /*pixelated background gradient*/
+}
+
+.stinger-skeleton {
+    /* center it at the bottom left of the parent*/
+    --x: 0px;
+    --y: 0px;
+    position: absolute;
+    /* pixel width and height are 10% of parent*/
+    /*inherit the current dims of the parent*/
+    height: auto;
+    left: 25%;
+    top: 60%;
+    max-width: 10%;
+    min-width: 5%;
+}
+
+
+@keyframes x {
+    to {
+        margin-left: calc(var(--x) + .05px);
+        /*cycle color thru rainbow*/
+        filter: hue-rotate(1deg);
+    }
+}
+@keyframes y {
+    to {
+        margin-top: calc(var(--y) + .025px);
+        /*cycle color thru rainbow*/
+    }
+}

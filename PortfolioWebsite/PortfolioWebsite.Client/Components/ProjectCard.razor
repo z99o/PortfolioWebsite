@@ -1,10 +1,12 @@
 ﻿@using Shared.Models;
+@inject PortfolioWebsite.Client.Services.ProjectService ProjectService;
 <MudCard>
     <MudCardContent>
         <MudPaper Class="d-flex flex-row flex-grow-1 gap-4" Elevation="0">
+            <MudGrid>
             <ProjectCarousel imageUrls="@project.ImageUrls"/>
             <MudDivider Vertical="true" FlexItem="true" />
-            <MudList>
+            <MudList Class="ml-5">
                 <MudListItem>
                     <MudText Typo="Typo.h4">@project.Title</MudText>
                 </MudListItem>
@@ -19,6 +21,11 @@
 					</MudListItem>
 				}
             </MudList>
+            @if(admin)
+			{
+				<MudButton Variant="MudBlazor.Variant.Filled" Color="MudBlazor.Color.Primary" OnClick="@(async () => await ProjectService.DeleteProject(project.ID.ToString()))">Delete</MudButton>
+			}
+            </MudGrid>
         </MudPaper>
     </MudCardContent>
     <MudDivider DividerType="MudBlazor.DividerType.Middle" />
@@ -59,6 +66,8 @@
 
     [Parameter]
     public Project? project { get; set; }
+    [Parameter]
+    public bool admin { get; set; }
 
     protected override void OnInitialized()
     {

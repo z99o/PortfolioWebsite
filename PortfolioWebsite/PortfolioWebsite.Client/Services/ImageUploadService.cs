@@ -36,7 +36,7 @@ namespace PortfolioWebsite.Client.Services
 			var formData = new MultipartFormDataContent();
 		 																		
 			// add the image file to the form data
-			formData.Add(new StreamContent(file.OpenReadStream()), "file", file.Name);
+			formData.Add(new StreamContent(file.OpenReadStream(maxAllowedSize:1024*30000)), "file", file.Name);
 			
 			// send the form data to the server
 			var response = await _httpClient.PostAsync("api/ImageUpload/Upload", formData);

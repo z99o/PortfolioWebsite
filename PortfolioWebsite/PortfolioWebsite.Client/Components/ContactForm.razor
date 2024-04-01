@@ -1,0 +1,58 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject PortfolioWebsite.Client.Services.EmailService EmailService
+<!--Mudblazor form that takes name, email, and message -->
+	<MudPaper Class="pa-4">
+		<MudForm @bind-IsValid="@success">
+	
+			<MudText Align="Align.Center" Typo="Typo.h4" Class="my-4">@Funny</MudText>
+		@if (loading)
+		{
+			<MudProgressLinear Indeterminate = "true" Class = "my-7" />
+			<MudProgressLinear Indeterminate = "true" Class = "my-7" />
+			<MudProgressLinear Indeterminate="true" Class="my-7" />
+		}
+		else{
+			<MudTextField Label="Email" @bind-Value="Email" Required="true" RequiredError="Email is required!" Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
+			<MudTextField Label="Reason For Contact" @bind-Value="Reason" Required="true" RequiredError="Reason is required!" />
+			<MudTextField AutoGrow="true" Label="Message" @bind-Value="Message" Required="true"  Multiline="true" RequiredError="You must send a message!" />
+		}
+		<MudButton Style="display:block; margin:auto" Class="mt-4" Disabled="@(!success )" Color="MudBlazor.Color.Primary" Variant="MudBlazor.Variant.Filled" OnClick="@(() => SubmitForm())">
+			@if (loading)
+			{
+				<MudProgressCircular Class="ms-n1" Size="MudBlazor.Size.Small" Indeterminate="true" />
+			}
+			else{
+				<MudText>Submit</MudText>
+			}
+			</MudButton>
+		</MudForm>
+	</MudPaper>
+
+@code {
+	bool success = false;
+	bool loading = false;
+	private string? Email { get; set; }
+	private string? Message { get; set; }
+	private string? Reason { get; set; }
+	private string? Funny = "Contact Me";
+
+	private async void SubmitForm()
+	{
+		//submit the form
+		Console.WriteLine(String.Format("Email: {0}\n  Reason: {1}\n Message: {2}\n", Email, Reason, Message));
+		string subjectLine = String.Format("{0} from {1}", Reason,Email);
+		Funny = "Contacting Me...";
+		success = false;
+		loading = true;
+		await EmailService.SendEmail(subjectLine, Message, Email);
+		loading = false;
+		Console.WriteLine("Email Sent");
+		//clear the form
+		Email = "";
+		Message = "";
+		Reason = "";
+		Funny = "Thanks for contacting me!";
+		StateHasChanged();
+	}
+
+}

@@ -3,24 +3,30 @@
 @using Shared.Models;
 
 @page "/"
-<PageTitle>Projects</PageTitle>
-@foreach (var project in projects)
-{
-	<PortfolioWebsite.Client.Components.ProjectCard project="@project" />
-}
+<PageTitle>About</PageTitle>
+
+<PortfolioWebsite.Client.Components.DynamicProfile></PortfolioWebsite.Client.Components.DynamicProfile>
+<MudPaper Elevation="1">
+	<MudPaper>
+		<MudText Typo="Typo.h5">
+			About Me
+		</MudText>
+	</MudPaper>
+	<MudText Typo="Typo.body1">
+		Hello, my name is Zachary Morello, I am a full-stack software developer. I specialize in backend development and high quality, tactile user experiences. There isn't much I can say here that isn't better represented by my work, so please check out the <MudLink Href="/projects">Projects</MudLink> page to see what I've been working on.
+	</MudText>
+</MudPaper>
 
 @code{
 	protected override void OnAfterRender(bool firstRender)
 	{
 		base.OnAfterRender(firstRender);
-			AppState.SetCurrentPage(Services.CurrentPage.AboutMe);
+		AppState.SetCurrentPage(Services.CurrentPage.AboutMe);
 	}
 
-	List<Project>? projects = new List<Project>();
 	protected override async void OnInitialized()
 	{
 		base.OnInitialized();
-		projects = await ProjectService.GetProjects();
 	}
 
 }

@@ -4,7 +4,8 @@
     {
         AboutMe = 1,
         Projects = 2,
-        Contact = 3
+        Contact = 3,
+        Admin = 4
     }
     public class AppState
 	{

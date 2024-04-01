@@ -5,15 +5,15 @@
 @page "/projects"
 <PageTitle>Projects</PageTitle>
 
+@if (!dataIsLoaded)
+{
+	<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
+	<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
+	<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
+}
 @foreach (var project in projects)
 {
-	@if (dataIsLoaded == false)
-	{
-		<PortfolioWebsite.Client.Components.ProjectCard_Skeleton></PortfolioWebsite.Client.Components.ProjectCard_Skeleton>
-	}
-	else{
 		<PortfolioWebsite.Client.Components.ProjectCard project="@project"/>
-	}
 }
 
 @code{
@@ -24,8 +24,8 @@
 		Title = "Portfolio Website",
 		SubTitle = "This website!!!",
 		Description = "This website serves as a showcase of my work! It is using Blazor WebAssembly for the backend and frontend. The UI is made with MudBlazor, a fantastic open source component library that seems to out-swag Telerik at points. I've normally worked with SQL but decided to try out MongoDB as the storage for the project information, like what you're reading at this moment. The web server is published through Azure.",
-		ImageUrls = new List<string> { "images/portfolio.png" },
-		Highlights = new List<string> { "Blazor WebAssembly", "MongoDB", "Azure DevOps"},
+		ImageUrls = new List<string> {"images/portfolio.png"},
+		Highlights = new List<string> {"Blazor WebAssembly", "MongoDB", "Azure DevOps"},
 		GithubURL = "https://github.com/z99o/PortfolioWebsite"
 	};
 
@@ -33,17 +33,25 @@
 
 	private bool dataIsLoaded = false;
 
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		base.OnInitialized();
-		projects = await ProjectService.GetProjects();
-		projects.Insert(0,defaultProj);
-		dataIsLoaded = true;
+		if (firstRender)
+		{
+			await Task.Run(()=>LoadProjects());
+			dataIsLoaded = true;
+			StateHasChanged();
+		}
 	}
+
+	private async Task LoadProjects()
+	{
+		projects = await ProjectService.GetProjects();
+		projects.Insert(0, defaultProj);
+	}
+
 	protected override void OnAfterRender(bool firstRender)
 	{
 		
 		base.OnAfterRender(firstRender);
-			AppState.SetCurrentPage(Services.CurrentPage.Projects);
 	}
 }

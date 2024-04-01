@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioWebsite.Client", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PortfolioWebsite.Shared", "PortfolioWebsite.Shared\PortfolioWebsite.Shared.shproj", "{D8152AC4-DDA9-49F9-A407-D129C25F9473}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioWebsite.Tests", "PortfolioWebsite.Tests\PortfolioWebsite.Tests.csproj", "{1A270F66-7BDA-4A12-894A-865D893D990C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{04AF8565-CF70-4C84-A1A5-6AE68922B16C} = {04AF8565-CF70-4C84-A1A5-6AE68922B16C}
+		{0B63FFC5-4AC8-4229-A1AB-DF6E5266729A} = {0B63FFC5-4AC8-4229-A1AB-DF6E5266729A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +29,10 @@ Global
 		{04AF8565-CF70-4C84-A1A5-6AE68922B16C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04AF8565-CF70-4C84-A1A5-6AE68922B16C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04AF8565-CF70-4C84-A1A5-6AE68922B16C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A270F66-7BDA-4A12-894A-865D893D990C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A270F66-7BDA-4A12-894A-865D893D990C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A270F66-7BDA-4A12-894A-865D893D990C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A270F66-7BDA-4A12-894A-865D893D990C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

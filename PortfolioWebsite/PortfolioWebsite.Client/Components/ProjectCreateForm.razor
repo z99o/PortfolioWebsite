@@ -10,9 +10,9 @@
 			<MudTextField @bind-Value="model.Title" Label="Title" Required="true" Validation="@(new Func<string, string>(AlreadyExists))" />
 			<MudTextField @bind-Value="model.SubTitle" Label="SubTitle" Required="true" />
 			<MudTextField @bind-Value="model.Description" Label="Description" Required="true" />
-			<MudTextField @bind-Value="model.GithubURL" Label="GithubURL" Required="true" />
-			<MudTextField @bind-Value="model.ProjectURL" Label="ProjectURL" Required="true" />
-			<MudFileUpload T="IBrowserFile" Accept=".png,.jpg,.gif,.webm" FilesChanged="AddFile">
+			<MudTextField @bind-Value="model.GithubURL" Label="GithubURL" Required="false"/>
+			<MudTextField @bind-Value="model.ProjectURL" Label="ProjectURL" Required = "false"/>
+			<MudFileUpload T="IReadOnlyList<IBrowserFile>" Accept=".png,.jpg,.gif,.webm" FilesChanged="AddFiles">
 				<ButtonTemplate>
 					<MudButton HtmlTag="label"
 							   Variant="MudBlazor.Variant.Filled"
@@ -77,7 +77,6 @@
 		public string SubTitle { get; set; }
 		[Required]
 		public string Description { get; set; }
-		[Required]
 		[Url]
 		public string GithubURL { get; set; }
 		[Url]
@@ -98,6 +97,7 @@
 		}
 		Project project = new Project
 		{
+			ID = Guid.NewGuid().ToString(),
 			Title = model.Title,
 			SubTitle = model.SubTitle,
 			Description = model.Description,
@@ -122,9 +122,12 @@
 	}
 
 
-	private void AddFile(IBrowserFile file)
+	private void AddFiles(IReadOnlyList<IBrowserFile> files)
 	{
-		files.Add(file);
+		foreach (var file in files)
+		{
+			this.files.Add(file);
+		}
 	}
 
 	private void ClearFiles()

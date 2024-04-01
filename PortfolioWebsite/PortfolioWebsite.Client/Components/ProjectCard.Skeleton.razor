@@ -1,25 +1,15 @@
-﻿<MudSkeleton Loading="true" Animation="MudBlazor.Animation.Wave" Height="350px" Width="100%">
-	<MudCard>
-		<MudCardContent>
-			<MudSkeleton Class="d-flex flex-row flex-grow-1 gap-4" Elevation="0" Animation="MudBlazor.Animation.Pulse">
-				<MudDivider Vertical="true" FlexItem="true" />
-				<MudList>
-					<MudListItem>
-						<MudSkeleton Height="40px" Width="120px" Animation="MudBlazor.Animation.Pulse"></MudSkeleton>
-					</MudListItem>
-					<MudDivider />
-					<MudListItem Avatar="@Icons.Material.Filled.Computer">
-						<MudSkeleton Height="40px" Width="120px" Animation="MudBlazor.Animation.Pulse"></MudSkeleton>
-					</MudListItem>
-				</MudList>
-			</MudSkeleton>
-		</MudCardContent>
-		<MudDivider DividerType="MudBlazor.DividerType.Middle" />
-		<MudCardActions>
-			<MudSkeleton Animation="MudBlazor.Animation.Pulse" Height="50px" Style="flex:auto"></MudSkeleton>
-		</MudCardActions>
-	</MudCard>
-</MudSkeleton>
+﻿<MudCard>
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" />
+    <MudCardContent>
+        <MudSkeleton Width="30%" Height="42px;" />
+        <MudSkeleton Width="80%" />
+        <MudSkeleton Width="100%" />
+    </MudCardContent>
+    <MudCardActions>
+        <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+        <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+    </MudCardActions>
+</MudCard>
 <MudSpacer />
 @code {
 

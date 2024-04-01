@@ -25,13 +25,26 @@ namespace PortfolioWebsite.DataAccess
 
         public async Task<Project> Create(Project entity)
         {
+            entity.ID = "";
 			await Records.InsertOneAsync(entity);
 			return entity;
 		}
 
         public async Task<string> Delete(string id)
         {
-            await Records.DeleteOneAsync(x => x.ID == id);
+            var proj = await GetByID(id);
+            if (proj.ImageUrls != null)
+            {
+                proj.ImageUrls.ForEach(x=>
+                {
+					var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", x.Split('/')[2]);
+					if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+                });
+            }
+			await Records.DeleteOneAsync(x => x.ID == id);
             return id;
         }
         public async Task<List<Project>> GetAll()

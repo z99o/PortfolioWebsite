@@ -1,13 +1,11 @@
 ﻿
-<div class="projectcarousel">
-    <MudCarousel Class="mud-width-full" Style="height:350px; width:500px" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+<div class="project-carousel gradient-border">
+    <MudCarousel ShowArrows="@arrows" Style="height:350px" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" AutoCycleTime="System.TimeSpan.FromSeconds(10)" TData="object">
         @if (imageUrls != null){
             foreach(var imageUrl in imageUrls)
 		    {
-			    <MudCarouselItem Transition="transition" >
-				    <div class="d-flex">
-					    <MudImage Width=width Height=height ObjectFit="ObjectFit.ScaleDown" Src="@imageUrl" />
-				    </div>
+			    <MudCarouselItem Transition="transition" Style="display:grid; place-items:center">
+                      <MudImage Fluid="true" ObjectFit="MudBlazor.ObjectFit.Contain" Src="@imageUrl" Style="max-height:100%" />
 			    </MudCarouselItem>
 		    }
         }

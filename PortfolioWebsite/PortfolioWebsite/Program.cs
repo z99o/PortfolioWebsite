@@ -29,6 +29,7 @@ builder.Services.AddSingleton<IStyleProvider, BootstrapStyleProvider>();
 builder.Services.AddSingleton<AppState, AppState>();
 builder.Services.AddTransient<ProjectService, ProjectService>();
 builder.Services.AddTransient<ImageUploadService, ImageUploadService>();
+builder.Services.AddTransient<EmailService, EmailService>();
 //builder.Services.AddSingleton<IPopoverService, MudPopoverProvider>();
 builder.Services
     .AddBlazorise(options =>
